@@ -9,6 +9,9 @@ router.get('/json', async (req) => {
 })
 
 router.get('/json/:message', async (req, params) => {
+    // if we want our CORS headers to be origin-aware, we need to provide the response object with our original request.
+    response.request = req
+    
     return response.json(
         {'message': params.message},
         {

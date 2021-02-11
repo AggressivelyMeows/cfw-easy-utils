@@ -1,7 +1,31 @@
 # Cloudflare Workers: Easy Utils
 *A library designed to make writing workers so much cleaner and easier!*
 
-### response
+This lib is going to a bunch of helpers for making your code easier to read.
+
+## Install
+`npm i cfw-easy-utils`
+
+```js
+import { response } from 'cfw-easy-utils'
+
+addEventListener('fetch', async (event) => {
+    if (event.request.method == 'OPTIONS') {
+        return event.respondWith(response.cors())
+    }
+
+    var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
+
+    var toSendBack = {
+        'hello': 'world',
+        'randomData': data.randomness
+    }
+
+    return event.respondWith(response.json(toSendBack));
+})
+```
+
+### Response helpers
 A bunch of handler functions to solve the bane of any developers work, ***hard-to-read and messy code***. Also auto-magically handles CORS, enabled by default but can be disabled.
 
 **Before**

@@ -5,9 +5,18 @@ export const response = {
         allowHeaders: 'Content-Type',
     },
 
+    request: null, // if this is set, we need to use the origin of the request for our CORS headers.
+
     _corsHeaders() {
+        var origin = this.accessControl.allowOrigin
+        
+        if (this.request) {
+            // we have a request object, lets use its origin as our CORS origin.
+            origin = new URL(this.request.url).origin
+        }
+
         return {
-            'Access-Control-Allow-Origin': this.accessControl.allowOrigin,
+            'Access-Control-Allow-Origin': origin,
             'Access-Control-Allow-Methods': this.accessControl.allowMethods,
             'Access-Control-Max-Age': '1728000'
         }
