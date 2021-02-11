@@ -1,11 +1,11 @@
 {
   "name": "cfw-easy-utils",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An utils library for common tasks with CloudFlare Workers.",
   "main": "dist/cfw-easy-utils.js",
   "scripts": {
     "inc": "npm version patch --no-git-tag-version && git add package.json && git commit -m \"Auto-increment version.\" && git push",
-    "build": "rollup src/index.js -o dist/cfw-easy-utls.js -f cjs",
+    "build": "rollup src/index.js -o dist/cfw-easy-utils.js -f cjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
