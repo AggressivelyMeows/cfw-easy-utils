@@ -17,6 +17,7 @@
   "author": "Cerulean",
   "license": "MIT",
   "devDependencies": {
-    "@neriko/cloudflare-workers-router": "^0.1.1"
+    "@neriko/cloudflare-workers-router": "^0.1.1",
+    "rollup": "^2.38.5"
   }
 }
