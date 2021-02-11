@@ -6,28 +6,27 @@ This lib is going to a bunch of helpers for making your code easier to read.
 ## Install
 `npm i cfw-easy-utils`
 
+**Bare bones example**
+
 ```js
 import { response } from 'cfw-easy-utils'
 
-addEventListener('fetch', async (event) => {
-    if (event.request.method == 'OPTIONS') {
-        return event.respondWith(response.cors())
+addEventListener("fetch", event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+    // respondWith needs a promise.
+    var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
+
+    var toSendBack = {
+        'hello': 'world',
+        'randomData': data.randomness
     }
 
-    return event.respondWith(new Promise(async res => {
-        // respondWith needs a promise.
-        var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
-
-        var toSendBack = {
-            'hello': 'world',
-            'randomData': data.randomness
-        }
-
-        // resolve promise with a response.
-        res(response.json(toSendBack)))
-    })
-
-})
+    // resolve promise with a response.
+    return response.json(toSendBack))
+}
 ```
 
 ### Response helpers
