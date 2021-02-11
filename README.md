@@ -12,11 +12,15 @@ This lib is going to a bunch of helpers for making your code easier to read.
 import { response } from 'cfw-easy-utils'
 
 addEventListener("fetch", event => {
-  event.respondWith(handleRequest(event.request))
+    if (event.request.method == 'OPTIONS') {
+        // if this is a CORS request, let easy-utils handle the return.
+        return event.respondWith(response.cors(event.request))
+    }
+
+    event.respondWith(handleRequest(event.request))
 })
 
 async function handleRequest(request) {
-    // respondWith needs a promise.
     var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
 
     var toSendBack = {
@@ -24,8 +28,10 @@ async function handleRequest(request) {
         'randomData': data.randomness
     }
 
-    // resolve promise with a response.
-    return response.json(toSendBack))
+    // response.json returns a valid response object
+    // with all of the required headers set.
+    // includes CORS headers.
+    return response.json(toSendBack)
 }
 ```
 

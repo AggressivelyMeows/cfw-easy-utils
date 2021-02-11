@@ -54,7 +54,12 @@ export const response = {
         )
     },
 
-    cors() {
+    cors(request) {
+        if (request) {
+            // set request so we can make our headers origin-aware.
+            this.request = request
+        }
+        
         return new Response(null, { headers: this._corsHeaders() })
     },
 
