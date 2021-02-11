@@ -14,14 +14,19 @@ addEventListener('fetch', async (event) => {
         return event.respondWith(response.cors())
     }
 
-    var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
+    return event.respondWith(new Promise(async res => {
+        // respondWith needs a promise.
+        var data = await fetch('https://drand.cloudflare.com/public/latest').then(resp => resp.json())
 
-    var toSendBack = {
-        'hello': 'world',
-        'randomData': data.randomness
-    }
+        var toSendBack = {
+            'hello': 'world',
+            'randomData': data.randomness
+        }
 
-    return event.respondWith(response.json(toSendBack));
+        // resolve promise with a response.
+        res(response.json(toSendBack)))
+    })
+
 })
 ```
 
