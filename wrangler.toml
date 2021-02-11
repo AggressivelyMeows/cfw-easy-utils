@@ -1,0 +1,8 @@
+name = "cfw-easy-utils"
+type = "webpack"
+account_id = "2dcc5a4f486a50625b4167e90d113158"
+workers_dev = true
+route = ""
+zone_id = ""
+
+webpack_config = "example.webpack.config.js"

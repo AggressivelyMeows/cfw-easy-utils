@@ -1,0 +1,22 @@
+{
+  "name": "cfw-easy-utils",
+  "version": "0.0.1",
+  "description": "An utils library for common tasks with CloudFlare Workers.",
+  "main": "dist/cfw-easy-utils.js",
+  "scripts": {
+    "inc": "npm version patch --no-git-tag-version && git add package.json && git commit -m \"Auto-increment version.\" && git push",
+    "build": "rollup src/index.js -o dist/cfw-easy-utls.js -f cjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "workers",
+    "cloudflare",
+    "cfw",
+    "utils"
+  ],
+  "author": "Cerulean",
+  "license": "MIT",
+  "devDependencies": {
+    "@neriko/cloudflare-workers-router": "^0.1.1"
+  }
+}
