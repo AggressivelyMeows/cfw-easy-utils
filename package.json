@@ -19,5 +19,9 @@
   "devDependencies": {
     "@neriko/cloudflare-workers-router": "^0.1.1",
     "rollup": "^2.38.5"
+  },
+  "dependencies": {
+    "cfw-easy-html": "^0.1.9",
+    "cookie": "^0.4.1"
   }
 }

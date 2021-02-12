@@ -1,3 +1,6 @@
+export * from './cookies.js'
+export * from './secrets.js'
+
 export const response = {
     accessControl: {
         allowOrigin: '*',
@@ -22,6 +25,11 @@ export const response = {
         }
     },
 
+    injectCors(response, options) {
+        // modify a response object to have CORS headers.
+        var headers = this._corsHeaders()
+    },
+
     _genericResponse(mimetype, body, options) {
         // helper function to make developing this easier.
         if (typeof options === 'undefined') { var options = {} }
@@ -31,6 +39,8 @@ export const response = {
         var autoCors = options.autoCors
         // use different method since we want a bool which can be false.
         if (typeof options.autoCors === 'undefined') { autoCors = true }
+
+        var cookies = options.cookies || null
 
         var headers = {
             'Content-Type': mimetype,
@@ -44,7 +54,7 @@ export const response = {
             }
         }
 
-        return new Response(
+        var resp = new Response(
             body,
             {
                 status,
@@ -52,6 +62,16 @@ export const response = {
                 headers
             }
         )
+
+        if (cookies) {
+            var val = cookies.values()
+
+            val.forEach(header => {
+                resp.headers.append('Set-Cookie', header)
+            })
+        }
+
+        return resp
     },
 
     cors(request) {
@@ -59,7 +79,7 @@ export const response = {
             // set request so we can make our headers origin-aware.
             this.request = request
         }
-        
+
         return new Response(null, { headers: this._corsHeaders() })
     },
 
@@ -94,5 +114,26 @@ export const response = {
             body,
             options
         )
+    },
+
+    setHeader(response, key, value) {
+        var resp = new Response(response.body, response)
+        var val = value
+        if (typeof value.values == 'function') {
+            // our values function returns an array
+            val = value.values()
+
+            val.forEach(header => {
+                resp.headers.append(key, header)
+            })
+        } else {
+            resp.headers.append(key, val)
+        }
+        
+        return resp
+    },
+
+    headersToObject(headers) {
+        return Object.fromEntries(headers.entries())
     }
 }
