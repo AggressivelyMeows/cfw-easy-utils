@@ -1,7 +1,14 @@
 export * from './cookies.js'
 export * from './secrets.js'
+export * from './stopwatch.js'
+
+var version = '{{ packageVersion }}'
 
 export const response = {
+    version,
+    config: {
+        debugHeaders: true
+    },
     accessControl: {
         allowOrigin: '*',
         allowMethods: 'GET, POST, PUT',
@@ -41,6 +48,7 @@ export const response = {
         if (typeof options.autoCors === 'undefined') { autoCors = true }
 
         var cookies = options.cookies || null
+        var stopwatch = options.stopwatch || null
 
         var headers = {
             'Content-Type': mimetype,
@@ -70,6 +78,15 @@ export const response = {
                 resp.headers.append('Set-Cookie', header)
             })
         }
+
+        if (stopwatch) {
+            resp.headers.set('Server-Timing', stopwatch.getHeader())
+        }
+
+        if (this.config.debugHeaders) {
+            resp.headers.set('x-cfw-eu-version', this.version)
+        }
+        
 
         return resp
     },
@@ -114,6 +131,55 @@ export const response = {
             body,
             options
         )
+    },
+
+    fromResponse(resp, options) {
+        var oldHeaders = this.headersToObject(resp.headers)
+
+        var headers = {
+            ...oldHeaders,
+            ...options.headers || {}
+        }
+
+        if ('headers' in options) {
+            delete options.headers
+        }
+
+        var contentType = JSON.parse(JSON.stringify(headers['content-type'])) // force new String
+
+        if ('content-type' in headers) {
+            delete headers['content-type'] // to stop multiple Content-Type headers.
+        }
+
+        return this._genericResponse(
+            contentType,
+            resp.body,
+            {
+                headers,
+                ...options
+            }
+        )
+    },
+
+    async static(request, options) {
+        var baseUrl = options.baseUrl
+        if (!baseUrl) {
+            throw 'You need to specify a baseUrl for response.static to work.'
+        }
+
+        let url = new URL(request.url)
+
+        // wrap this fetch in our custom Response formatter
+        var resp = await fetch(
+            `${baseUrl}${url.pathname.replace(options.routePrefix || '<>', '')}`,
+            {
+                cf: {
+                    cacheTtl: options.ttl || 600,
+                }
+            }
+        )
+
+        return this.fromResponse(resp, options)
     },
 
     setHeader(response, key, value) {

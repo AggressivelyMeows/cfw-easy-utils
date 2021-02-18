@@ -1,6 +1,6 @@
 ---
 id: cookies
-title: 🍪 Cookie utils
+title: 🍪 Cookie utilities
 ---
 
 This section of the package focuses on cookies and how to integrate them with your Worker.

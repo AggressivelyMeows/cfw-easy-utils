@@ -3,10 +3,17 @@ import { Router } from '@neriko/cloudflare-workers-router'
 const router = new Router();
 
 import { $ } from 'cfw-easy-html'
-import { response, cookies, secrets } from './src/index.js'
+import { response, cookies, secrets, Stopwatch } from './src/index.js'
 
 router.get('/json', async (req) => {
     return response.json({'Hello': 'world!'})
+})
+
+router.get('/cdn/*', async (req, params) => {
+    return response.static(req, {
+        baseUrl: 'https://cerulean.nyc3.digitaloceanspaces.com',
+        routePrefix: '/cdn'
+    })
 })
 
 router.get('/json/:message', async (req, params) => {
@@ -37,6 +44,19 @@ router.get('/cookies', async (req) => {
     cookieJar.set('data', { 'hello': 'world' })
 
     return response.json({ token, oldToken: cookieJar.get('authToken') }, { cookies: cookieJar })
+})
+
+router.get('/hash', async (req) => {
+    var watch = new Stopwatch()
+    var password = new URL(req.url).searchParams.get('password') || 'heck'
+
+    var pass = await secrets.hashPassword(password)
+    watch.mark('Hashed password')
+
+    var match = await secrets.validatePassword(password, pass)
+    watch.mark('Validated password')
+
+    return response.json({ password: pass, isValid: match }, { stopwatch: watch })
 })
 
 addEventListener('fetch', (event) => {

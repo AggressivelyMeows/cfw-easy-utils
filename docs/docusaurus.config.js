@@ -15,7 +15,7 @@ module.exports = {
       title: 'CF-Workers: Easy Utils',
       logo: {
         alt: 'My Site Logo',
-        src: 'img/logo.svg',
+        src: 'https://media.spns.us/ext/easy-utils.png',
       },
       items: [
         {
