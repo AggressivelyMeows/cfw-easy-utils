@@ -20,7 +20,7 @@ return response.json({ 'hello': 'world!' })
 ```
 
 ### 🎨 Cache S3 buckets & more!
-Want to save money on your bill? Cache your assets on the edge and speed up your images. No more having to Google for hours trying to get a solution to work.
+Want to save money on your bill? Cache your assets on the edge and speed up your images. All of Cloudflare's caching power in a single line of code.
 ```js
 return response.static(request, { baseUrl: 'https://yourbucket.net' })
 ```
