@@ -33,6 +33,10 @@ The time in seconds for how long you wish to keep this asset cached on Cloudflar
 **routePath: String**
 If you are running this behind a route, you might want to use this to remove the route's prefix. For example, if you had this running behind `/cdn` you might want to remove `/cdn` from the asset path otherwise it might not find the asset you want. This will remove the string you pass from the Request path.
 
+```js title="Example"
+return response.static(request, { baseUrl: 'https://example.com', ttl: 1600 })
+```
+
 ## response.json
 ***response.json(body: StringOrObject, options: OptionsObject)***  
 
