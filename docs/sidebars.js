@@ -1,6 +1,6 @@
 module.exports = {
   someSidebar: {
     'Getting Started': ['install'],
-    'Documentation': ['response', 'cookies', 'stopwatch']
+    'Documentation': ['response', 'cookies', 'stopwatch', 'websockets']
   },
 };
