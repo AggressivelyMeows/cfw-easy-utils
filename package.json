@@ -25,6 +25,7 @@
     "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
-    "cookie": "^0.4.1"
+    "cookie": "^0.4.1",
+    "nanoevents": "^5.1.11"
   }
 }

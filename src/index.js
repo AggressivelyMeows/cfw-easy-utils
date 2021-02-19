@@ -1,14 +1,19 @@
 export * from './cookies.js'
 export * from './secrets.js'
 export * from './stopwatch.js'
+export * from './websockets.js'
 
 var version = '{{ packageVersion }}'
 
 export const response = {
     version,
+
     config: {
-        debugHeaders: true
+        // For future HMAC generation
+        secretKey: 'password',
+        debugHeaders: false
     },
+
     accessControl: {
         allowOrigin: '*',
         allowMethods: 'GET, POST, PUT',
@@ -182,6 +187,10 @@ export const response = {
         return this.fromResponse(resp, options)
     },
 
+    async websocket(socket) {
+        return new Response(null, { status: 101, webSocket: socket.client })
+    },
+
     setHeader(response, key, value) {
         var resp = new Response(response.body, response)
         var val = value
@@ -200,6 +209,7 @@ export const response = {
     },
 
     headersToObject(headers) {
-        return Object.fromEntries(headers.entries())
+        var object = Object.fromEntries(headers.entries())
+        return object
     }
 }
