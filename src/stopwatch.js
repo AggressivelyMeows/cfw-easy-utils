@@ -27,7 +27,7 @@ export class Stopwatch {
 
     getTotalTime() {
         // returns total time in MS
-        return new Date() - start
+        return new Date() - this.start
     }
 
     join(stopwatchInstance) {
