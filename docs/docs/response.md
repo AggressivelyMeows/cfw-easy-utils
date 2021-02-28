@@ -30,11 +30,11 @@ The base URL of the resource you want to fetch. For example: 'https://example.co
 **ttl: Integer**
 The time in seconds for how long you wish to keep this asset cached on Cloudflare's servers. Defaults to `600` seconds (10 minutes).
 
-**routePath: String**
+**routePrefix: String**
 If you are running this behind a route, you might want to use this to remove the route's prefix. For example, if you had this running behind `/cdn` you might want to remove `/cdn` from the asset path otherwise it might not find the asset you want. This will remove the string you pass from the Request path.
 
 ```js title="Example"
-return response.static(request, { baseUrl: 'https://example.com', ttl: 1600 })
+return response.static(request, { baseUrl: 'https://example.com', ttl: 1600, routePrefix: '/cdn' })
 ```
 
 ## response.json
