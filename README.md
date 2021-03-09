@@ -1,15 +1,17 @@
 # 🦄 CF Workers: easy-utils
 *A library designed to make writing workers so much cleaner and easier!*
 
-Welcome to easy-utils, this library is designed to make writing Workers easy as heck. Included in this package is a bunch of helpers for responses, profiling*, handling cookies, and serving any static assets.
+Welcome to easy-utils, this library is designed to make writing Workers easy as heck. Included in this package is a bunch of helpers for responses, profiling, handling cookies, and serving any static assets. Now with full Websocket support! The first and currently only lib to [support Websockets](https://easy-utils.docs.ceru.dev/docs/websockets#websocket#websockets) on Cloudflare Workers.
 
 Turn your Worker code from spaghetti hell to majestic artwork today with easy-utils.
 
 **Documentation**:
-## https://easy-utils.docs.ceru.dev
+## https://easy-utils.docs.ceru.dev/docs/
 
 ## 🔧 Install
 `npm i cfw-easy-utils` 
+
+*Note: this lib has tree-shaking enabled by default. Only import what you need and you will keep your package size low!*
 
 ## ✨ Examples
 
@@ -23,6 +25,25 @@ return response.json({ 'hello': 'world!' })
 Want to save money on your bill? Cache your assets on the edge and speed up your images. All of Cloudflare's caching power in a single line of code.
 ```js
 return response.static(request, { baseUrl: 'https://yourbucket.net' })
+```
+
+### 🔌 Go realtime with Websockets!
+Support Websockets at the edge with our util library. Get access to a full Websocket client and server for your every need.
+```js
+import { response, Websocket, WebsocketResponse } from 'cfw-easy-utils'
+
+var ws = new Websocket('ws://echo.websocket.org') // Client
+var resp = new WebsocketResponse() // Server
+
+ws.on('message', (msg) => {
+    resp.send(msg)
+})
+
+resp.on('message', (msg) => {
+    ws.send(msg)
+})
+
+return response.websocket(resp)
 ```
 
 ### 🍃 Handle CORS with a breeze!

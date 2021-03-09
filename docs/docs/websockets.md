@@ -3,26 +3,51 @@ id: websockets
 title: 🔌 Websocket utilities
 ---
 
-Create a Worker with the ability to return a Websocket. Allow two-way access to your data, reduce latency, and other things with easy-utils!
+Want to run a Websocket server OR client at the edge? Now you can with the ease of use you love with cfw-easy-utils!
 
-```js title="Example"
-import { response, WebsocketResponse } from 'cfw-easy-utils'
+```js title="Client and server example"
+import { response, WebsocketResponse, Websocket } from 'cfw-easy-utils'
 
-var socket = new WebsocketResponse()
+// This example is a simple Websocket proxy that intercepts
+// and processes the messages at the edge.
+var resp = new WebsocketResponse()
+var ws = new Websocket('ws://echo.websocket.org')
 
-socket.on('message', (msg) => {
-    // incoming data will be converted to JSON if possible.
-    // if you send a Blob, ArrayBuffer, etc, it will be left alone.
-
-    // same with .send, a plain Object or Array will be JSON encoded.
-    // anything else will be left as is.
-    socket.send(msg)
+ws.on('message', (msg) => {
+    // data coming from the external service
+    resp.send(msg)
 })
 
-return response.websocket(socket)
+resp.on('message', (msg) => {
+    // data coming from the end user
+    ws.send(msg)
+})
+
+return response.websocket(resp)
 ```
 
 ---
+
+## Websocket
+***new Websocket(url)***
+
+Creates a new Websocket client. Works exactly like you would expect from a Websocket client however it hides a lot of the messy stuff you would have to deal with as a developer.
+
+### on(event: String, callback: Function)
+
+Runs a function every time an event is triggered. Example events include `message`, `ready`, and `closed`. CFW-EU will try its best to decode the incoming event but if it fails for whatever reason, the full body will be sent to the callback. For example, if you are using a JSON Websocket server, we will try to parse but it is failsafe.
+
+:::info
+You can also use `addEventListener` if you want to keep compatibility with existing code. Be aware that addEventListener'ed events will **not** be processed by this lib. It is a straight passthrough.
+:::
+
+### send(body: [WebsocketValidBody](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/send#syntax))
+
+Sends the body to the client. If the body is a plain JS Object or Array, it will be JSON'ifyed before being sent. Any other type of body will be left as is to be sent as a Binary frame.
+
+```js title="Not part of the official standard but its available as a nice helper:"
+socket.send({ some: data })
+```
 
 ## WebsocketResponse
 ***new WebsocketResponse()***  

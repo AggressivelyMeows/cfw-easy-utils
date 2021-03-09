@@ -1,4 +1,5 @@
-# Website
+# Easy utils documentation website
+## 🦄 [easy-utils.docs.ceru.dev](https://easy-utils.docs.ceru.dev)
 
 This website is built using [Docusaurus 2](https://v2.docusaurus.io/), a modern static website generator.
 
