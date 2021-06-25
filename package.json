@@ -1,6 +1,6 @@
 {
   "name": "cfw-easy-utils",
-  "version": "0.3.0",
+  "version": "1.0.1",
   "sideEffects": false,
   "description": "An utils library for common tasks with CloudFlare Workers.",
   "main": "dist/cfw-easy-utils.js",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "cookie": "^0.4.1",
-    "nanoevents": "^5.1.11"
+    "nanoevents": "^5.1.11",
+    "socket.io": "^4.0.0"
   }
 }
