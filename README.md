@@ -1,7 +1,7 @@
 # 🦄 CF Workers: easy-utils
 *A library designed to make writing workers so much cleaner and easier!*
 
-Welcome to easy-utils, this library is designed to make writing Workers easy as heck. Included in this package is a bunch of helpers for responses, profiling, handling cookies, and serving any static assets. Now with full Websocket support! The first and currently only lib to [support Websockets](https://easy-utils.docs.ceru.dev/docs/websockets#websockets) on Cloudflare Workers.
+Welcome to easy-utils, this library is designed to make writing Workers easy as heck. Included in this package is a bunch of helpers for responses, profiling, handling cookies, and serving any static assets. Now with full Websocket support!
 
 Turn your Worker code from spaghetti hell to majestic artwork today with easy-utils.
 

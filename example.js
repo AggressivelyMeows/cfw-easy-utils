@@ -2,7 +2,7 @@ import { $ } from 'cfw-easy-html'
 import { Router } from '@neriko/cloudflare-workers-router'
 import { response, cookies, secrets, Stopwatch, WebsocketResponse, Websocket } from './src/index.js'
 
-global.Websocket = Websocket
+global.WebSocket = Websocket
 
 import { io } from "socket.io-client"
 
@@ -38,8 +38,6 @@ router.get('/ws', async (req, params) => {
     })
 
     console.log(socket)
-
-    
 
     return response.websocket(resp)
 })

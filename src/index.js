@@ -93,7 +93,7 @@ export const response = {
         }
         
 
-        return resp
+        return new Promise(res => res(resp))
     },
 
     cors(request) {

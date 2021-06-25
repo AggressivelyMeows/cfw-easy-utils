@@ -87,7 +87,7 @@ export const secrets = {
     async validatePassword(password, existingPassword) {
         var options = {
             salt: existingPassword.split(';s=')[1].split(';')[0],
-            iterations: existingPassword.split(';i=')[1].split(';')[0]
+            iterations: parseInt(existingPassword.split(';i=')[1].split(';')[0])
         }
 
         var hashedPassword = await this.hashPassword(password, options)
