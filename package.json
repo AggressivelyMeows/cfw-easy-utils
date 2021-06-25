@@ -1,6 +1,6 @@
 {
   "name": "cfw-easy-utils",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "sideEffects": false,
   "description": "An utils library for common tasks with CloudFlare Workers.",
   "main": "dist/cfw-easy-utils.js",
