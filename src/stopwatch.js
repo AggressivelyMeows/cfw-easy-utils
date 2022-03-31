@@ -12,9 +12,6 @@ export class Stopwatch {
     }
 
     mark(name, options) {
-        console.log('Last checkpoint: ', this.lastCheckpointTime)
-        console.log(new Date())
-        console.log('Difference: ', new Date() - this.lastCheckpointTime)
         this.checkpoints.push({
             name,
             time: new Date(),
